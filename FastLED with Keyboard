@@ -1,0 +1,74 @@
+Hello Dudes, 
+first i have to say its my first time at Github and my english is not the best..^^
+
+I want to build a LED Matrix with the ws281b LEDs. I already bought them and also started solvering, so please dont give me a answer like
+"why u dont buy a complete matrix?", or "why do u use this kind of LED Strip?"... 
+The matrix consists out of 14x15 LEDs and it is possible to controll each of them like leds[23]=CRG(255,0,0).
+I use an Arduino Uno, to controll the LEDs. 
+
+A part of my Code looks like that:
+
+#include <FastLED.h>
+
+// How many leds in your strip?
+#define NUM_LEDS 29
+
+// For led chips like Neopixels, which have a data line, ground, and power, you just
+// need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
+// ground, and power), like the LPD8806 define both DATA_PIN and CLOCK_PIN
+#define DATA_PIN 6
+// Define the array of leds
+CRGB leds[NUM_LEDS];
+
+
+
+    
+  void snake(int len,int pos){
+    for (int t=0;t<len;t++){
+      if(t+pos<NUM_LEDS){
+          leds[pos+t]= CRGB(0,255,0);
+        }
+       else{
+       leds[pos+t-NUM_LEDS]= CRGB(0,255,0); }
+      }
+        FastLED.show();
+      for (int t=0;t<len;t++){
+      if(t+pos<NUM_LEDS){
+          leds[pos+t]= CRGB(0,0,0);}
+       else{
+       leds[pos+t-NUM_LEDS]= CRGB(0,0,0); }
+      }
+    }
+
+
+  
+void setup() {
+  FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
+}
+
+void loop() {
+  for (int i=0;i<NUM_LEDS;i++){
+  snake(5,i);
+  delay(200);
+  }
+  }
+  
+  
+  I would like to build a game like Snake or Tetris in the future.
+  So i need to use my Keyboard to write a function like
+  
+  void move(int position){
+  if(pressRight && (position+1)%14!=0){ //if the position is at the end of the map, he cannot move right
+  leds[position+1];}}
+  
+  It is just an example how I would like to write the function. I know there is a possibility to create a twi dimensional array,
+  so I dont have to do like (position+1)%14!=0), but thats a problem for the future ^^
+  
+  My problem i am asking for at the moment is how to use my keyboard to controll the LEDs in realtime and without using any other Pins
+  at the Arduino instead of the Data-Pin 6, the Gnd Pin and the 5V pin.
+  
+  I just want to controll the code with an usb cable to the arduino. Maybe later i will add some buttons to the matrix and connect them
+  to the Arduino, but at the moment I just want to upload the code to the Arduino and use "w","a","s","d" to move around the LED Matrix.
+  
+  Thank u for ur help!
+  
